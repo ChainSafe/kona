@@ -5056,6 +5056,36 @@ dependencies = [
 ]
 
 [[package]]
+name = "kona-supervisor-core"
+version = "0.1.0"
+dependencies = [
+ "alloy-eips 0.15.8",
+ "async-trait",
+ "jsonrpsee 0.25.1",
+ "kona-interop",
+ "kona-supervisor-rpc",
+]
+
+[[package]]
+name = "kona-supervisor-rpc"
+version = "0.1.0"
+dependencies = [
+ "alloy-eips 0.15.8",
+ "jsonrpsee 0.25.1",
+ "kona-interop",
+]
+
+[[package]]
+name = "kona-supervisor-service"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "jsonrpsee 0.25.1",
+ "kona-supervisor-core",
+ "kona-supervisor-rpc",
+]
+
+[[package]]
 name = "lazy_static"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -8323,6 +8353,16 @@ name = "subtle"
 version = "2.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "13c2bddecc57b384dee18652358fb23172facb8a2c51ccc10d74c157bdea3292"
+
+[[package]]
+name = "supervisor"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "kona-supervisor-service",
+ "tokio",
+]
 
 [[package]]
 name = "symbolic-common"
