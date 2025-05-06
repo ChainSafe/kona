@@ -11,3 +11,4 @@ kona-supervisor-rpc = { workspace = true, features = ["jsonrpsee"] }
 # External dependencies
 jsonrpsee = { workspace = true, features = ["macros", "server"] }
 anyhow = { workspace = true }
+tracing = { workspace = true}

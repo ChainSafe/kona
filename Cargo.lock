@@ -5060,10 +5060,12 @@ name = "kona-supervisor-core"
 version = "0.1.0"
 dependencies = [
  "alloy-eips 0.15.8",
+ "alloy-primitives",
  "async-trait",
  "jsonrpsee 0.25.1",
  "kona-interop",
  "kona-supervisor-rpc",
+ "tracing",
 ]
 
 [[package]]
@@ -5071,6 +5073,7 @@ name = "kona-supervisor-rpc"
 version = "0.1.0"
 dependencies = [
  "alloy-eips 0.15.8",
+ "alloy-primitives",
  "jsonrpsee 0.25.1",
  "kona-interop",
 ]
@@ -5083,6 +5086,7 @@ dependencies = [
  "jsonrpsee 0.25.1",
  "kona-supervisor-core",
  "kona-supervisor-rpc",
+ "tracing",
 ]
 
 [[package]]
@@ -8360,8 +8364,11 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
+ "kona-cli",
  "kona-supervisor-service",
  "tokio",
+ "tracing",
+ "tracing-subscriber 0.3.19",
 ]
 
 [[package]]

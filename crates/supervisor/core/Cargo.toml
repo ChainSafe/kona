@@ -18,10 +18,12 @@ kona-supervisor-rpc = { workspace = true, features = ["jsonrpsee"] }
 
 # Alloy
 alloy-eips.workspace = true
+alloy-primitives = { workspace = true, features = ["map", "rlp", "serde"] }
 
 # Misc
 jsonrpsee = { workspace = true, features = [ "server" ] }
 async-trait.workspace = true
+tracing = { workspace = true }
 
 [lints]
 workspace = true

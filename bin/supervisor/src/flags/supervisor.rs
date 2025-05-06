@@ -1,10 +1,8 @@
-//! Contains the supervisor flags.
-
-use clap::Args;
+use clap::{ Args};
 
 /// Global configuration arguments.
 #[derive(Args, Debug)]
-pub struct GlobalArgs {
+pub struct SupervisorArgs {
     /// L1 RPC source.
     #[arg(long, env = "L1_RPC", help = "L1 RPC source")]
     pub l1_rpc: String,
@@ -28,16 +26,4 @@ pub struct GlobalArgs {
     /// Path to the dependency-set JSON config file.
     #[arg(long = "dependency-set", env = "DEPENDENCY_SET", help = "Path to dependency-set config")]
     pub dependency_set: Option<String>,
-
-     /// Run the supervisor in mock/test mode.
-    #[arg(long = "mock-run", env = "MOCK_RUN", help = "Mock mode")]
-    pub mock_run: bool,
-}
-
-/// Configuration for Prometheus metrics.
-#[derive(Args, Debug)]
-pub struct MetricsArgs {
-    /// Port to expose Prometheus metrics.
-    #[arg(long, env = "METRICS_PORT", help = "Port to expose Prometheus metrics on", default_value_t = 9090)]
-    pub metrics_port: u16,
 }

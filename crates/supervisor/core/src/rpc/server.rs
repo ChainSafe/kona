@@ -6,10 +6,13 @@ use jsonrpsee::{
     core::RpcResult, // Import RpcError alias
     types::{error::ErrorCode, ErrorObject},
 };
+use alloy_primitives::B256;
+use kona_interop::{ExecutingDescriptor, SafetyLevel};
 use kona_interop::{DerivedIdPair, SuperRootResponse};
 use crate::supervisor::Supervisor;
 use kona_supervisor_rpc::SupervisorApiServer;
 use std::sync::Arc;
+use tracing::{trace, warn};
 
 /// The server-side implementation struct for the `SupervisorApi`.
 /// It holds a reference to the core Supervisor logic.
@@ -25,6 +28,7 @@ impl SupervisorRpc {
     /// Creates a new [`SupervisorRpc`] instance.
     /// This is where you would inject the actual Supervisor instance.
     pub fn new(supervisor: Arc<Supervisor>) -> Self {
+        trace!("Creating new SupervisorRpc handler");
         Self { supervisor }
     }
 }
@@ -32,70 +36,98 @@ impl SupervisorRpc {
 #[async_trait]
 impl SupervisorApiServer for SupervisorRpc {
     async fn cross_derived_to_source(&self) -> RpcResult<()> {
+        trace!("Received cross_derived_to_source request");
         // Note: The core Supervisor::cross_derived_to_source likely needs arguments.
         // This needs alignment between the RPC API definition and the core logic (add args here).
         // self.supervisor.cross_derived_to_source()
         //   .await
         //   .map_err(|_| ErrorObject::from(ErrorCode::InternalError))?;
-        Err(ErrorObject::from(ErrorCode::MethodNotFound))
+        warn!("cross_derived_to_source method not yet implemented");
+        Err(ErrorObject::from(ErrorCode::InternalError))
     }
 
     async fn local_unsafe(&self) -> RpcResult<BlockNumHash> {
+        trace!("Received local_unsafe request");
         // self.supervisor.local_unsafe()
         // .await
         // .map_err(|_| ErrorObject::from(ErrorCode::InternalError))?;
-        Err(ErrorObject::from(ErrorCode::MethodNotFound))
+        warn!("local_unsafe method not yet implemented");
+        Err(ErrorObject::from(ErrorCode::InternalError))
     }
 
     async fn cross_safe(&self) -> RpcResult<DerivedIdPair> {
+        trace!("Received cross_safe request");
         // self.supervisor.cross_safe()
         // .await
         // .map_err(|_| ErrorObject::from(ErrorCode::InternalError))?;
-        Err(ErrorObject::from(ErrorCode::MethodNotFound))
+        warn!("cross_safe method not yet implemented");
+        Err(ErrorObject::from(ErrorCode::InternalError))
     }
 
     async fn finalized(&self) -> RpcResult<BlockNumHash> {
+        trace!("Received finalized request");
         // self.supervisor.finalized()
         // .await
         // .map_err(|_| ErrorObject::from(ErrorCode::InternalError))?;
-        Err(ErrorObject::from(ErrorCode::MethodNotFound))
+        warn!("finalized method not yet implemented");
+        Err(ErrorObject::from(ErrorCode::InternalError))
     }
 
     async fn finalized_l1(&self) -> RpcResult<()> {
+        trace!("Received finalized_l1 request");
         // self.supervisor.finalized_l1()
         // .await
         // .map_err(|_| ErrorObject::from(ErrorCode::InternalError))?;
-        Err(ErrorObject::from(ErrorCode::MethodNotFound))
+        warn!("finalized_l1 method not yet implemented");
+        Err(ErrorObject::from(ErrorCode::InternalError))
     }
 
     async fn super_root_at_timestamp(&self) -> RpcResult<SuperRootResponse> {
+        trace!("Received super_root_at_timestamp request");
         // Note: Needs arguments aligned with core logic.
         // self.supervisor.super_root_at_timestamp()
         // .await
         // .map_err(|_| ErrorObject::from(ErrorCode::InternalError))?;
-        Err(ErrorObject::from(ErrorCode::MethodNotFound))
+        warn!("super_root_at_timestamp method not yet implemented");
+        Err(ErrorObject::from(ErrorCode::InternalError))
     }
 
     async fn sync_status(&self) -> RpcResult<()> {
+        trace!("Received sync_status request");
         // self.supervisor.sync_status()
         // .await
         // .map_err(|_| ErrorObject::from(ErrorCode::InternalError))?;
-        Err(ErrorObject::from(ErrorCode::MethodNotFound))
+        warn!("sync_status method not yet implemented");
+        Err(ErrorObject::from(ErrorCode::InternalError))
     }
 
     async fn all_safe_derived_at(&self) -> RpcResult<()> {
+        trace!("Received all_safe_derived_at request");
         // Note: Needs arguments aligned with core logic.
         // self.supervisor.all_safe_derived_at()
         // .await
         // .map_err(|_| ErrorObject::from(ErrorCode::InternalError))?;
-        Err(ErrorObject::from(ErrorCode::MethodNotFound))
+        warn!("all_safe_derived_at method not yet implemented");
+        Err(ErrorObject::from(ErrorCode::InternalError))
     }
-
-    async fn check_access_list(&self) -> RpcResult<()> {
+ 
+    async fn check_access_list(
+        &self, 
+        inbox_entries: Vec<B256>,
+        min_safety: SafetyLevel,
+        executing_descriptor: ExecutingDescriptor,
+    ) -> RpcResult<()> {
+        trace!(
+            num_inbox_entries = inbox_entries.len(),
+            ?min_safety,
+            ?executing_descriptor,
+            "Received check_access_list request",
+        );
         // Note: Needs arguments aligned with core logic.
         // self.supervisor.check_access_list()
         // .await
         // .map_err(|_| ErrorObject::from(ErrorCode::InternalError))?;
-        Err(ErrorObject::from(ErrorCode::MethodNotFound))
+        warn!("check_access_list method not yet implemented");
+        Err(ErrorObject::from(ErrorCode::InternalError))
     }
 }

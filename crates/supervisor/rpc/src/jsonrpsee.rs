@@ -3,6 +3,8 @@
 use alloy_eips::eip1898::BlockNumHash; 
 use kona_interop::{DerivedIdPair, SuperRootResponse};
 use jsonrpsee::{core::RpcResult, proc_macros::rpc};
+use alloy_primitives::B256;
+use kona_interop::{ExecutingDescriptor, SafetyLevel};
 
 /// Optimism specified rpc interface.
 ///
@@ -44,5 +46,10 @@ pub trait SupervisorApi {
 
   /// Verifies if an access-list references only valid messages
   #[method(name = "checkAccessList")]
-  async fn check_access_list(&self) -> RpcResult<()>;
+  async fn check_access_list(
+    &self, 
+    inbox_entries: Vec<B256>, 
+    min_safety: SafetyLevel,
+    executing_descriptor: ExecutingDescriptor,
+  ) -> RpcResult<()>;
 }

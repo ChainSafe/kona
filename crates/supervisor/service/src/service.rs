@@ -8,6 +8,7 @@ use kona_supervisor_core::{
 };
 use kona_supervisor_rpc::SupervisorApiServer;
 use std::{net::SocketAddr, sync::Arc};
+use tracing::info;
 
 /// Configuration for the Supervisor service.
 #[derive(Debug, Clone)]
@@ -23,7 +24,7 @@ pub struct SupervisorService {
     config: SupervisorServiceConfig,
     supervisor_core: Arc<Supervisor>,
     rpc_impl: SupervisorRpc,
-    // Optional: Add handles or channels for managing background tasks if needed
+    // TODO:: add other actors
 }
 
 impl SupervisorService {
@@ -46,7 +47,10 @@ impl SupervisorService {
     /// Runs the Supervisor service.
     /// This function will typically run indefinitely until interrupted.
     pub async fn run(self) -> Result<ServerHandle> {
-        println!("Starting Supervisor RPC server on {}", self.config.rpc_addr);
+        info!(
+            "Attempting to start Supervisor RPC server on {}",
+            self.config.rpc_addr
+        );
 
         let server = ServerBuilder::default()
             .build(self.config.rpc_addr)
@@ -54,9 +58,11 @@ impl SupervisorService {
 
         let handle = server.start(self.rpc_impl.into_rpc());
 
-        println!("Supervisor RPC server started successfully.");
-        // In a real service, you might spawn other background tasks here
-        // and wait for them or the server handle.
+        info!(
+            "Supervisor RPC server started successfully and listening on {}",
+            self.config.rpc_addr
+        );
+        
         Ok(handle)
     }
 }
