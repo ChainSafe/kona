@@ -5065,6 +5065,8 @@ dependencies = [
  "jsonrpsee 0.25.1",
  "kona-interop",
  "kona-supervisor-rpc",
+ "metrics",
+ "thiserror 2.0.12",
  "tracing",
 ]
 

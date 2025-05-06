@@ -24,6 +24,10 @@ alloy-primitives = { workspace = true, features = ["map", "rlp", "serde"] }
 jsonrpsee = { workspace = true, features = [ "server" ] }
 async-trait.workspace = true
 tracing = { workspace = true }
+thiserror.workspace = true
+
+# `metrics` feature
+metrics = { workspace = true, optional = true }
 
 [lints]
 workspace = true

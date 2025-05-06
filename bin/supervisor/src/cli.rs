@@ -33,21 +33,19 @@ impl Cli {
 
         Self::run_until_ctrl_c(async move {
             // TODO: Use values from self.global or self.metrics to configure the service
-            // For example, self.global.l1_rpc, self.metrics.metrics_port etc.
             let config = SupervisorServiceConfig {
-                // Placeholder RPC address, you'll want to make this configurable
+                // TODO:: introduce RPC addr and port in flag and use it
                 rpc_addr: SocketAddr::new(IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1)), 9000),
             };
-            let service = SupervisorService::new(config.clone())?;
-            let _server_handle = service.run().await?;
+            let mut service = SupervisorService::new(config.clone())?;
+            service.run().await?; // run() now returns Result<()> and populates the handle internally
 
-            // Wait for shutdown signal (Ctrl+C)
             tokio::signal::ctrl_c().await?;
-            info!("Shutdown signal received.");
-
-            // TODO:: Graceful shutdown logic for the server
-            
-            info!("Supervisor shut down gracefully.");
+            info!("Shutdown signal received. Initiating service shutdown...");
+    
+            service.shutdown().await?; // Call shutdown on the service instance itself
+    
+            info!("Supervisor service shut down gracefully.");
             Ok(())
         })
     }
