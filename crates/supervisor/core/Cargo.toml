@@ -27,7 +27,7 @@ tracing = { workspace = true }
 thiserror.workspace = true
 
 # `metrics` feature
-metrics = { workspace = true, optional = true }
+metrics = { workspace = true }
 
 [lints]
 workspace = true

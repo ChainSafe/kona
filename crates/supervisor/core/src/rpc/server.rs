@@ -25,6 +25,7 @@ pub struct SupervisorRpc {
 impl SupervisorRpc {
     /// Creates a new [`SupervisorRpc`] instance.
     pub fn new(supervisor: Arc<Supervisor>) -> Self {
+        super::Metrics::init();
         trace!("Creating new SupervisorRpc handler");
         Self { supervisor }
     }
@@ -105,23 +106,26 @@ impl SupervisorApiServer for SupervisorRpc {
     }
  
     async fn check_access_list(
-        &self, 
+        &self,
         inbox_entries: Vec<B256>,
         min_safety: SafetyLevel,
         executing_descriptor: ExecutingDescriptor,
     ) -> RpcResult<()> {
-        trace!(
-            num_inbox_entries = inbox_entries.len(),
-            ?min_safety,
-            ?executing_descriptor,
-            "Received check_access_list request",
-        );
-        self.supervisor
-            .check_access_list(inbox_entries, min_safety, executing_descriptor)
-            .await
-            .map_err(|e| {
-                warn!(target: "supervisor_rpc", "Error from core supervisor check_access_list: {:?}", e);
-                ErrorObject::from(ErrorCode::InternalError)
-            })
+        // TODO:: build proc macro to record metrics
+        crate::observe_rpc_call!("check_access_list", async {
+            trace!(
+                num_inbox_entries = inbox_entries.len(),
+                ?min_safety,
+                ?executing_descriptor,
+                "Received check_access_list request",
+            );
+            self.supervisor
+                .check_access_list(inbox_entries, min_safety, executing_descriptor)
+                .await
+                .map_err(|e| {
+                    warn!(target: "supervisor_rpc", "Error from core supervisor check_access_list: {:?}", e);
+                    ErrorObject::from(ErrorCode::InternalError)
+                })
+        }.await)
     }
 }
