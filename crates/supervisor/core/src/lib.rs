@@ -2,7 +2,7 @@
 
 /// Contains the main Supervisor struct and its implementation.
 mod supervisor;
-pub use supervisor::Supervisor;
+pub use supervisor::{Supervisor, SupervisorError};
 
 mod rpc;
-pub use rpc::server::SupervisorRpc;
+pub use rpc::SupervisorRpc;

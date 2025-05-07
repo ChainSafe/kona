@@ -2,7 +2,6 @@ use alloy_eips::eip1898::BlockNumHash;
 use alloy_primitives::B256;
 use kona_interop::{ExecutingDescriptor, SafetyLevel, DerivedIdPair, SuperRootResponse};
 use thiserror::Error;
-use core::error;
 
 /// Custom error type for the Supervisor core logic.
 #[derive(Debug, Error)]
