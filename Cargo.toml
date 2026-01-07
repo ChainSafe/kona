@@ -149,7 +149,7 @@ alloy-op-evm = { version = "0.6.0", default-features = false }
 
 # General
 url = "2.5.4"
-lru = "0.14.0"
+lru = "0.16.3"
 dirs = "6.0.0"
 spin = "0.10.0"
 clap = "4.5.37"
